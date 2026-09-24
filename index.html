@@ -212,7 +212,16 @@
         <button id="btnInstallPwa" style="display:none;" class="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/30 text-[10px] md:text-xs font-semibold flex items-center gap-1.5 transition">
           <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">Install App</span>
         </button>
-** Tarik Data Cloud
+        
+        <button
+          id="btnSyncCloud"
+          onclick="pullDataFromCloud()"
+          class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-[10px] md:text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-900/30 transition"
+        >
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span class="hidden sm:inline">Tarik Data Cloud</span>
+        </button>
+        
         <button id="btnSyncCloud" onclick="syncDataToSpreadsheet()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-[10px] md:text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-900/30 transition">
           <i class="fa-solid fa-floppy-disk"></i> <span class="hidden sm:inline">Simpan Spreadsheet</span>
         </button>
