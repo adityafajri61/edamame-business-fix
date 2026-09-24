@@ -214,6 +214,10 @@
         </button>
 
         <button id="btnSyncCloud" onclick="syncDataToSpreadsheet()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-[10px] md:text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-900/30 transition">
+          <i class="fa-solid fa-floppy-disk"></i> <span class="hidden sm:inline">Tarik Data Cloud</span>
+        </button>
+
+        <button id="btnSyncCloud" onclick="syncDataToSpreadsheet()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-[10px] md:text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-900/30 transition">
           <i class="fa-solid fa-floppy-disk"></i> <span class="hidden sm:inline">Simpan Spreadsheet</span>
         </button>
 
@@ -3157,6 +3161,50 @@
         return;
       }
 
+      // FUNGSI MENARIK DATA DARI CLOUD KE PERANGKAT
+async function pullDataFromCloud(silent = false) {
+  if (!appSettings.webAppUrl) {
+    if (!silent) alert('URL Apps Script belum dikonfigurasi di Pengaturan!');
+    return;
+  }
+
+  const btn = document.getElementById('btnPullCloud');
+  if (!silent && btn) btn.innerHTML = '** Menarik...';
+
+  try {
+    const response = await fetch(appSettings.webAppUrl);
+    const data = await response.json();
+    
+    if (data && Object.keys(data).length > 0) {
+      // Timpa data lokal dengan data dari cloud
+      if (data.products) products = data.products;
+      if (data.customers) customers = data.customers;
+      if (data.suppliers) suppliers = data.suppliers;
+      if (data.orders) orders = data.orders;
+      if (data.invoices) invoices = data.invoices;
+      if (data.shipments) shipments = data.shipments;
+      if (data.returns) returns = data.returns;
+      if (data.expenses) expenses = data.expenses;
+      if (data.inventoryLogs) inventoryLogs = data.inventoryLogs;
+
+      // Hapus entity name saat save agar menyimpan SEMUA data ke LocalStorage
+      saveAppData(); 
+      
+      if (!silent) alert('✅ Sinkronisasi berhasil! Data di perangkat ini sudah disamakan dengan Cloud.');
+      logAudit('CLOUD_PULL', 'Berhasil menarik data terbaru dari Google Sheets');
+      
+      // Refresh ulang halaman agar semua tabel terupdate
+      window.location.reload(); 
+    } else {
+       if (!silent) alert('Data di Cloud masih kosong. Silakan "Simpan Spreadsheet" dari perangkat utama Anda terlebih dahulu.');
+    }
+  } catch (err) {
+    console.error(err);
+    if (!silent) alert('Gagal menarik data. Pastikan URL Apps Script benar dan perangkat terhubung ke internet.');
+  } finally {
+    if (!silent && btn) btn.innerHTML = '** Tarik Data Cloud';
+  }
+}
       const btn = document.getElementById('btnSyncCloud');
       if (!silent && btn) btn.innerText = "Menyimpan...";
 
