@@ -3456,6 +3456,7 @@ async function pullDataFromCloud(silent = false) {
       if (!appSettings.webAppUrl) {
         openModal('configModal');
       }
+    };
       async function pullDataFromCloud(silent = false) {
   if (!appSettings.webAppUrl) {
     if (!silent) alert('URL Apps Script belum dikonfigurasi di Pengaturan!');
@@ -3490,7 +3491,6 @@ async function pullDataFromCloud(silent = false) {
     if (!silent && btn) btn.innerHTML = '** Tarik Data Cloud';
   }
 }
-    };
   </script>
 </body>
 </html>
